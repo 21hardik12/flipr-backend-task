@@ -37,6 +37,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get("/", (req, res) => res.send("Express on Vercel"));
+
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', authenticate, categoryRoutes);
 app.use('/api/expenses', authenticate, expenseRoutes);

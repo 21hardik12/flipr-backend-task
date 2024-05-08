@@ -7,10 +7,10 @@ let dotenv = require('dotenv');
 let mongoose = require('mongoose');
 dotenv.config();
 
-const authRoutes = require('./routes/auth');
-const categoryRoutes = require('./routes/categories');
-const expenseRoutes = require('./routes/expenses');
-const { authenticate } = require('./middleware/auth');
+const authRoutes = require('../routes/auth');
+const categoryRoutes = require('../routes/categories');
+const expenseRoutes = require('../routes/expenses');
+const { authenticate } = require('../middleware/auth');
 
 //connect to mongoDB
 mongoose.set("strictQuery", "false");
@@ -28,8 +28,8 @@ async function main() {
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -37,6 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get("/", (req, res) => res.send("Express on Vercel"));
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', authenticate, categoryRoutes);
 app.use('/api/expenses', authenticate, expenseRoutes);
